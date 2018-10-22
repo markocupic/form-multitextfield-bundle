@@ -32,7 +32,7 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface
     public function getBundles(ParserInterface $parser)
     {
         return [
-            BundleConfig::create('Markocupic\FormMultitextfieldBundle\MarkocupicFormMultitextfieldBundleBundle')
+            BundleConfig::create('Markocupic\FormMultitextfieldBundle\MarkocupicFormMultitextfieldBundle')
                 ->setLoadAfter(['Contao\CoreBundle\ContaoCoreBundle'])
         ];
     }
