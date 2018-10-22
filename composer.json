@@ -1,0 +1,46 @@
+{
+  "name": "markocupic/form-multitextfield-bundle",
+  "description": "Form Multitextfield Bundle",
+  "keywords": [
+    "contao",
+    "formfield"
+  ],
+  "type": "contao-module",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Marko Cupic",
+      "email": "m.cupic@gmx.ch",
+      "homepage": "https://github.com/markocupic/form-multitextfield-bundle",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/markocupic/form-multitextfield-bundle/issues",
+    "source": "https://github.com/markocupic/form-multitextfield-bundle"
+  },
+  "require": {
+    "php": ">=7.0",
+    "contao/core-bundle": ">=4.4",
+  },
+  "conflict": {
+    "contao/core": "3.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Markocupic\\FormMultitextfieldBundle\\": "src/"
+    },
+    "classmap": [
+      "src/Resources/contao"
+    ],
+    "exclude-from-classmap": [
+      "src/Resources/contao/config/",
+      "src/Resources/contao/dca/",
+      "src/Resources/contao/languages/",
+      "src/Resources/contao/templates/"
+    ]
+  },
+  "extra": {
+    "contao-manager-plugin": "Markocupic\\FormMultitextfieldBundle\\ContaoManager\\Plugin"
+  }
+}
