@@ -3,7 +3,7 @@
 /**
  * Form Multitextfield Bundle for Contao CMS
  *
- * Copyright (C) 2005-2018 Marko Cupic
+ * Copyright (C) 2005-2020 Marko Cupic
  *
  * @package Form Multitextfield Bundle
  * @link    https://www.github.com/markocupic/form-multitext-field-bundle
@@ -20,6 +20,5 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class MarkocupicFormMultitextfieldBundle extends Bundle
 {
-
 
 }

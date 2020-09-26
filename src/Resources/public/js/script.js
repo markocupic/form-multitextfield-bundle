@@ -1,38 +1,41 @@
+/**
+ * Form Multitextfield Bundle for Contao CMS
+ *
+ * Copyright (C) 2005-2020 Marko Cupic
+ *
+ * @package Form Multitextfield Bundle
+ * @link    https://www.github.com/markocupic/form-multitext-field-bundle
+ *
+ */
 (function ($) {
     $(document).ready(function () {
         "use strict";
 
         /**
-         * Remove row
+         * Add remove row event to button
          */
-        $('.form-multi-text-delete-btn').map(function(){
-            $(this).click(function(e){
+        $('.form-multi-text-remove-row-btn').map(function () {
+            $(this).click(function (e) {
                 e.preventDefault();
-                $(this).closest("tr").remove();
+                let row = $(this).closest("tr");
+                if ($(row).siblings('tr').length === 0) {
+                    return false;
+                }
+                $(row).remove();
             });
         });
 
         /**
-         * Add row
+         * Add clone row event to button
          */
-        $('.form-multi-text-add-row-btn').map(function(){
-            $(this).click(function(e){
+        $('.form-multi-text-clone-row-btn').map(function () {
+            $(this).click(function (e) {
                 e.preventDefault();
-                let newRow = $(this).closest("tr").clone(true);
-
-                $(newRow)
-                .find(".form-multi-text-add-row-btn")
-                .text($(this).data('lang-delete-row'))
-                .removeClass("form-multi-text-add-row-btn")
-                .addClass("form-multi-text-delete-btn")
-                .closest('tr')
-                .appendTo($(this).closest("tbody"))
-                .find(".form-multi-text-delete-btn")
-                .off("click")
-                .click(function(e){
-                    e.preventDefault();
-                    $(this).closest("tr").remove();
-                });
+                let button = e.target;
+                let master = $(button).closest("tr");
+                $(master)
+                .clone(true, true)// Deepclone (include events)
+                .insertAfter($(master));
             });
         });
 

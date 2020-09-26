@@ -1,5 +1,5 @@
 <?php
-$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/markocupicformmultitextfield/js/script.js';
+$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/markocupicformmultitextfield/js/script.js|static';
 ?>
 
 <?php $this->extend('form_row'); ?>
@@ -24,56 +24,26 @@ $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/markocupicformmultitextfield/js/script.js
 <div id="ctrl_<?= $this->id ?>">
     <input type="hidden" name="<?= rtrim($this->name, '[]') ?>" value="">
 
-    <?php if(empty($this->value)): ?>
-    <table>
-        <tbody>
-        <tr>
-            <td>
-                <input type="text" name="<?= $this->name ?>[]" value="" class="<?= $this->class ?>"<?= $this->getAttributes() ?>></td>
-            <td>
-                <button
-                        class="btn btn-success form-multi-text-add-row-btn"
-                        data-lang-add-row="<?= $this->addRowLbl ?>"
-                        data-lang-delete-row="<?= $this->deleteRowLbl ?>"
-                >
-                <?= $this->addRowLbl ?>
-                </button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <?php endif; ?>
-
-    <?php if(!empty($this->value)): ?>
+    <?php if(empty($this->value))$this->value = ['']; ?>
     <table id="multiTextFieldTable_<?= $this->id ?>">
         <tbody>
         <?php foreach ($this->value as $k => $strValue): ?>
         <tr>
             <td><input type="text" name="<?= $this->name ?>[]" value="<?= Contao\StringUtil::specialchars($strValue) ?>" class="<?= $this->class ?>"<?= $this->getAttributes() ?>></td>
             <td>
-                <?php if($k<1): ?>
-                    <button
-                            class="btn btn-success form-multi-text-add-row-btn"
-                            data-lang-add-row="<?= $this->addRowLbl ?>"
-                            data-lang-delete-row="<?= $this->deleteRowLbl ?>"
-                     >
-                     <?= $this->addRowLbl ?>
-                     </button>
-                <?php else: ?>
-                    <button
-                        class="btn btn-danger form-multi-text-delete-btn"
-                        data-lang-add-row="<?= $this->addRowLbl ?>"
-                        data-lang-delete-row="<?= $this->deleteRowLbl ?>"
-                    >
+                <button class="btn btn-success form-multi-text-clone-row-btn">
+                    <?= $this->addRowLbl ?>
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-warning form-multi-text-remove-row-btn">
                     <?= $this->deleteRowLbl ?>
-                    </button>
-                <?php endif; ?>
+                </button>
             </td>
         </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
-    <?php endif; ?>
 </div>
 
 <?php $this->endblock(); ?>

@@ -1,11 +1,16 @@
 <?php
 
-/*
- * This file is part of Contao.
+/**
+ * Form Multitextfield Bundle for Contao CMS
  *
- * (c) Leo Feyer
+ * Copyright (C) 2005-2020 Marko Cupic
  *
- * @license LGPL-3.0-or-later
+ * @package Form Multitextfield Bundle
+ * @link    https://www.github.com/markocupic/form-multitext-field-bundle
+ *
  */
 
+/**
+ * Palettes
+ */
 $GLOBALS['TL_DCA']['tl_form_field']['palettes']['multitext'] = '{type_legend},type,name,label;{fconfig_legend},mandatory,rgxp,placeholder;{expert_legend:hide},class,value,minlength,maxlength,accesskey,tabindex;{template_legend:hide},customTpl;{invisible_legend:hide},invisible';
