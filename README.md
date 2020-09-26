@@ -5,7 +5,7 @@ Usage with Contao Haste Form class:
 ```php
 $objForm->addFormField('ffm_partner_open', array(
     'label'     => 'Öffnungszeiten',
-    'inputType' => 'formMultiText',
+    'inputType' => 'multitext',
     'eval'      => array('multiple' => true),
     'value'     => $objModel->ffm_partner_open
 ));
