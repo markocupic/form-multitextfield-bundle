@@ -5,15 +5,15 @@ $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/markocupicformmultitextfield/js/script.js
 <?php $this->extend('form_row'); ?>
 
 <?php $this->block('label'); ?>
-<?php if ($this->label): ?>
-<label for="ctrl_<?= $this->id ?>"<?php if ($this->class): ?> class="<?= $this->class ?>"<?php endif; ?>>
-<?php if ($this->mandatory): ?>
-<span class="invisible"><?= $this->mandatoryField ?> </span><?= $this->label ?><span class="mandatory">*</span>
-<?php else: ?>
-<?= $this->label ?>
-<?php endif; ?>
-</label>
-<?php endif; ?>
+    <?php if ($this->label): ?>
+        <label for="ctrl_<?= $this->id ?>"<?php if ($this->class): ?> class="<?= $this->class ?>"<?php endif; ?>>
+        <?php if ($this->mandatory): ?>
+            <span class="invisible"><?= $this->mandatoryField ?> </span><?= $this->label ?><span class="mandatory">*</span>
+        <?php else: ?>
+            <?= $this->label ?>
+        <?php endif; ?>
+        </label>
+    <?php endif; ?>
 <?php $this->endblock(); ?>
 
 <?php $this->block('field'); ?>
@@ -29,17 +29,9 @@ $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/markocupicformmultitextfield/js/script.js
         <tbody>
         <?php foreach ($this->value as $k => $strValue): ?>
         <tr>
-            <td><input type="text" name="<?= $this->name ?>[]" value="<?= Contao\StringUtil::specialchars($strValue) ?>" class="<?= $this->class ?>"<?= $this->getAttributes() ?>></td>
-            <td>
-                <button class="btn btn-success form-multi-text-clone-row-btn">
-                    <?= $this->addRowLbl ?>
-                </button>
-            </td>
-            <td>
-                <button class="btn btn-warning form-multi-text-remove-row-btn">
-                    <?= $this->deleteRowLbl ?>
-                </button>
-            </td>
+            <td><input type="text" name="<?= $this->name ?>[]" value="<?= Contao\StringUtil::specialchars($strValue) ?>" class="<?php if ($this->hideInput): ?> password<?php endif; ?><?= $this->class ?>"<?= $this->getAttributes() ?>></td>
+            <td><button class="btn btn-success form-multi-text-clone-row-btn"><?= $this->addRowLbl ?></button></td>
+            <td><button class="btn btn-warning form-multi-text-remove-row-btn"><?= $this->deleteRowLbl ?></button></td>
         </tr>
         <?php endforeach; ?>
         </tbody>
