@@ -22,13 +22,19 @@
     <input type="hidden" name="<?= rtrim($this->name, '[]') ?>" value="">
 
     <?php if(empty($this->value)): ?>
-    <p>leer</p>
     <table>
         <tbody>
         <tr>
-            <td><input type="text" name="<?= $this->name ?>[]" id="ctrl_<?= $this->id ?>" value="" class="<?= $this->class ?>"<?= $this->getAttributes() ?>></td>
             <td>
-                <button class="btn btn-success form-multi-text-add-row-btn"><?= $this->addRowLbl ?></button>
+                <input type="text" name="<?= $this->name ?>[]" value="" class="<?= $this->class ?>"<?= $this->getAttributes() ?>></td>
+            <td>
+                <button
+                        class="btn btn-success form-multi-text-add-row-btn"
+                        data-lang-add-row="<?= $this->addRowLbl ?>"
+                        data-lang-delete-row="<?= $this->deleteRowLbl ?>"
+                >
+                <?= $this->addRowLbl ?>
+                </button>
             </td>
         </tr>
         </tbody>
@@ -40,9 +46,25 @@
         <tbody>
         <?php foreach ($this->value as $k => $strValue): ?>
         <tr>
-            <td><input type="text" name="<?= $this->name ?>[]" id="ctrl_<?= $this->id ?>" value="<?= StringUtil::specialchars($strValue) ?>" class="<?= $this->class ?>"<?= $this->getAttributes() ?>></td>
+            <td><input type="text" name="<?= $this->name ?>[]" value="<?= Contao\StringUtil::specialchars($strValue) ?>" class="<?= $this->class ?>"<?= $this->getAttributes() ?>></td>
             <td>
-                <?php if($k<1): ?><button class="btn btn-success form-multi-text-add-row-btn"><?= $this->addRowLbl ?></button><?php else: ?><button class="btn btn-danger form-multi-text-delete-btn"><?= $this->deleteRowLbl ?></button><?php endif; ?>
+                <?php if($k<1): ?>
+                    <button
+                            class="btn btn-success form-multi-text-add-row-btn"
+                            data-lang-add-row="<?= $this->addRowLbl ?>"
+                            data-lang-delete-row="<?= $this->deleteRowLbl ?>"
+                     >
+                     <?= $this->addRowLbl ?>
+                     </button>
+                <?php else: ?>
+                    <button
+                        class="btn btn-danger form-multi-text-delete-btn"
+                        data-lang-add-row="<?= $this->addRowLbl ?>"
+                        data-lang-delete-row="<?= $this->deleteRowLbl ?>"
+                    >
+                    <?= $this->deleteRowLbl ?>
+                    </button>
+                <?php endif; ?>
             </td>
         </tr>
         <?php endforeach; ?>
@@ -50,36 +72,5 @@
     </table>
     <?php endif; ?>
 </div>
-    <script>
-    (function ($) {
-        $(document).ready(function () {
-            "use strict";
-            // Set labels
-            var addRowLbl = "<?= $this->addRowLbl ?>";
-            var deleteRowLbl = "<?= $this->deleteRowLbl ?>";
 
-            $("#multiTextFieldTable_<?= $this->id ?> .form-multi-text-delete-btn").click(function(e){
-                e.preventDefault();
-                remove(this);
-            });
-
-            $("#multiTextFieldTable_<?= $this->id ?> .form-multi-text-add-row-btn").click(function(e){
-                e.preventDefault();
-                var newRow = $(this).closest("tr").clone(true);
-                $(newRow).find(".form-multi-text-add-row-btn").text(deleteRowLbl).removeClass("form-multi-text-add-row-btn").addClass("form-multi-text-delete-btn");
-                $(newRow).appendTo($(this).closest("tbody"));
-                $(newRow).find(".form-multi-text-delete-btn").off("click").click(function(e){
-                    e.preventDefault();
-                    remove(this);
-                });
-            });
-
-            function remove(el)
-            {
-                $(el).closest("tr").remove();
-            }
-        })
-    })(jQuery);
-
-</script>
 <?php $this->endblock(); ?>
