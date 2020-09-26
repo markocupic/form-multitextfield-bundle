@@ -129,7 +129,7 @@ class FormMultitextField extends Widget
         if (!$this->multiple)
         {
             // Convert to Punycode format (see #5571)
-            if ($this->rgxp == 'url')
+            if ($this->rgxp === 'url')
             {
                 try
                 {
@@ -137,7 +137,7 @@ class FormMultitextField extends Widget
                 }
                 catch (\InvalidArgumentException $e) {}
             }
-            elseif ($this->rgxp == 'email' || $this->rgxp == 'friendly')
+            elseif ($this->rgxp === 'email' || $this->rgxp === 'friendly')
             {
                 $varInput = Idna::encodeEmail($varInput);
             }
@@ -153,12 +153,13 @@ class FormMultitextField extends Widget
      */
     public function generate()
     {
+
         $strType = $this->hideInput ? 'password' : 'text';
 
         if (!$this->multiple)
         {
             // Hide the Punycode format (see #2750)
-            if ($this->rgxp == 'url')
+            if ($this->rgxp === 'url')
             {
                 try
                 {
@@ -166,7 +167,7 @@ class FormMultitextField extends Widget
                 }
                 catch (\InvalidArgumentException $e) {}
             }
-            elseif ($this->rgxp == 'email' || $this->rgxp == 'friendly')
+            elseif ($this->rgxp === 'email' || $this->rgxp === 'friendly')
             {
                 $this->varValue = Idna::decodeEmail($this->varValue);
             }

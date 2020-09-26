@@ -31,7 +31,7 @@
                 .off("click")
                 .click(function(e){
                     e.preventDefault();
-                    remove(this);
+                    $(this).closest("tr").remove();
                 });
             });
         });

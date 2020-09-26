@@ -11,4 +11,4 @@
  */
 
 // Front end form fields
-$GLOBALS['TL_FFL']['formMultiText'] = Markocupic\FormMultitextfieldBundle\Forms\FormMultitextField::class;
+$GLOBALS['TL_FFL']['multitext'] = Markocupic\FormMultitextfieldBundle\Forms\FormMultitextField::class;

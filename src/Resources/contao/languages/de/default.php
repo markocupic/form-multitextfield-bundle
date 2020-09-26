@@ -11,3 +11,6 @@
 $GLOBALS['TL_LANG']['MSC']['ffl_multitextfield_addRowLbl'] = 'Zeile hinzufügen';
 $GLOBALS['TL_LANG']['MSC']['ffl_multitextfield_deleteRowLbl'] = 'Zeile löschen';
 
+
+// Form fields
+$GLOBALS['TL_LANG']['FFL']['multitext'] = 'Mehrfach-Textfeld';
