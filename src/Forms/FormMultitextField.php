@@ -8,7 +8,11 @@
  * @license LGPL-3.0-or-later
  */
 
-namespace Contao;
+namespace Markocupic\FormMultitextfieldBundle\Forms;
+
+use Contao\Widget;
+use Contao\Idna;
+use Contao\StringUtil;
 
 /**
  * Provide methods to handle text fields.
@@ -22,7 +26,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormMultitextField extends \Widget
+class FormMultitextField extends Widget
 {
 
     /**
@@ -135,7 +139,7 @@ class FormMultitextField extends \Widget
             }
             elseif ($this->rgxp == 'email' || $this->rgxp == 'friendly')
             {
-                $varInput = \Idna::encodeEmail($varInput);
+                $varInput = Idna::encodeEmail($varInput);
             }
         }
 
@@ -158,13 +162,13 @@ class FormMultitextField extends \Widget
             {
                 try
                 {
-                    $this->varValue = \Idna::decodeUrl($this->varValue);
+                    $this->varValue = Idna::decodeUrl($this->varValue);
                 }
                 catch (\InvalidArgumentException $e) {}
             }
             elseif ($this->rgxp == 'email' || $this->rgxp == 'friendly')
             {
-                $this->varValue = \Idna::decodeEmail($this->varValue);
+                $this->varValue = Idna::decodeEmail($this->varValue);
             }
 
             return sprintf('<input type="%s" name="%s" id="ctrl_%s" class="tl_text%s" value="%s"%s onfocus="Backend.getScrollOffset()">%s',
@@ -172,7 +176,7 @@ class FormMultitextField extends \Widget
                 $this->strName,
                 $this->strId,
                 (($this->strClass != '') ? ' ' . $this->strClass : ''),
-                \StringUtil::specialchars($this->varValue),
+                StringUtil::specialchars($this->varValue),
                 $this->getAttributes(),
                 $this->wizard);
         }
@@ -197,7 +201,7 @@ class FormMultitextField extends \Widget
                 $this->strName,
                 $this->strId.'_'.$i,
                 $this->size,
-                \StringUtil::specialchars(@$this->varValue[$i]), // see #4979
+                StringUtil::specialchars(@$this->varValue[$i]), // see #4979
                 $this->getAttributes());
         }
 

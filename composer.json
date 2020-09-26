@@ -30,9 +30,6 @@
     "psr-4": {
       "Markocupic\\FormMultitextfieldBundle\\": "src/"
     },
-    "classmap": [
-      "src/Resources/contao"
-    ],
     "exclude-from-classmap": [
       "src/Resources/contao/config/",
       "src/Resources/contao/dca/",
