@@ -25,13 +25,13 @@ Or embeded in Contao frontend module controller:
  * @author     Marko Cupic
  * @package    Formulartest
  * @license    MIT
- * @see        https://github.com/markocupic/contao-my-form
+ * @see        https://github.com/markocupic/contao-pet-to-member-bundle
  *
  */
 
 declare(strict_types=1);
 
-namespace Markocupic\ContaoMyForm\Controller\FrontendModule;
+namespace Markocupic\ContaoPetToMemberBundle\Controller\FrontendModule;
 
 use Contao\Controller;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
@@ -44,16 +44,16 @@ use Contao\StringUtil;
 use Contao\Template;
 use Haste\Form\Form;
 use Haste\Util\Url;
-use Markocupic\ContaoMyForm\Model\PetsModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+
 /**
- * Class MyFormModuleController
+ * Class AssignPetToMemberModuleController
  *
- * @package Markocupic\ContaoMyForm\Controller\FrontendModule
+ * @package Markocupic\ContaoPetToMemberBundle\Controller\FrontendModule
  */
-class MyFormModuleController extends AbstractFrontendModuleController
+class AssignPetToMemberModuleController extends AbstractFrontendModuleController
 {
 
 
@@ -68,25 +68,18 @@ class MyFormModuleController extends AbstractFrontendModuleController
         $objDb = Database::getInstance()->execute('SELECT * FROM tl_member');
         $template->members = $objDb->fetchAllAssoc();
 
-        if (Input::get('id') && MemberModel::findByPk(Input::get('id')))
+        if (Input::get('id') && (null !== ($objModel = MemberModel::findByPk(Input::get('id')))))
         {
+
+            // Prepare serialized string from multicolumn wizard to default array => ['dog','cat','donkey']
             $value = [];
-            $objModel = PetsModel::findOneByPid(Input::get('id'));
-            if ($objModel === null)
+
+            $arrValue = StringUtil::deserialize($objModel->pets, true);
+            if (!empty($arrValue))
             {
-                $objModel = new PetsModel();
-                $objModel->pid = Input::get('id');
-            }
-            else
-            {
-                // Prepare serialized string from multicolumn wizard to default array => ['dog','cat','donkey']
-                $arrValue = StringUtil::deserialize($objModel->pets, true);
-                if (!empty($arrValue))
-                {
-                    $value = array_map(function ($row) {
-                        return $row['species'];
-                    }, $arrValue);
-                }
+                $value = array_map(function ($row) {
+                    return $row['species'];
+                }, $arrValue);
             }
 
             $objForm = new Form('pets_form', 'POST', function ($objHaste) {
@@ -116,7 +109,7 @@ class MyFormModuleController extends AbstractFrontendModuleController
                 if ($blnMandatory && empty($objWidget->value) || !is_array($objWidget->value))
                 {
                     $blnError = true;
-                    $objWidget->addError('Please add some pets!');
+                    $objWidget->addError('Please assign some pets to this user!');
                 }
 
                 if (!$blnError)
@@ -140,6 +133,7 @@ class MyFormModuleController extends AbstractFrontendModuleController
         return $template->getResponse();
     }
 }
+
 
 ```
 
