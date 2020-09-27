@@ -1,19 +1,27 @@
 # form-multitextfield-bundle
 
-Usage with Contao Haste Form class:
+![form-multitextfield-bundle](src/Resources/public/img/screenshot.png?raw=true "Formfield")
 
+Generate a multitext input within a contao frontend module controller using [codefog/contao-haste](https://github.com/codefog/contao-haste/blob/master/docs/Form/Form.md) form utils:
 
 ```php
+
+$objForm = new \Haste\Form\Form('pets_form', 'POST', function ($objHaste) {
+    return Input::post('FORM_SUBMIT') === $objHaste->getFormId();
+});
+            
 $blnMandatory = false;
 $objForm->addFormField('pets', [
-    'label'     => 'Haustiere',
+    'label'     => $this->translator->trans('MSC.pets', [], 'contao_default'),
     'inputType' => 'multitext',
     'eval'      => ['mandatory' => $blnMandatory, 'multiple' => true],
     'value'     => $value,
 ]);
+
+$template->forms = $objForm->generate();
 ```
 
-Or embeded in Contao frontend module controller:
+Example controller:
 
 ```php
 <?php
@@ -46,6 +54,7 @@ use Haste\Form\Form;
 use Haste\Util\Url;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 
 /**
@@ -56,6 +65,17 @@ use Symfony\Component\HttpFoundation\Response;
 class AssignPetToMemberModuleController extends AbstractFrontendModuleController
 {
 
+    /** @var TranslatorInterface */
+    private $translator;
+
+    /**
+     * AssignPetToMemberModuleController constructor.
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
 
     /**
      * @param Template $template
@@ -68,10 +88,11 @@ class AssignPetToMemberModuleController extends AbstractFrontendModuleController
         $objDb = Database::getInstance()->execute('SELECT * FROM tl_member');
         $template->members = $objDb->fetchAllAssoc();
 
-        if (Input::get('id') && (null !== ($objModel = MemberModel::findByPk(Input::get('id')))))
+        if (Input::get('id') && null !== ($objModel = MemberModel::findByPk(Input::get('id'))))
         {
 
-            // Prepare serialized string from multicolumn wizard to default array => ['dog','cat','donkey']
+            // Prepare serialized string from multicolumn wizard field
+            // to a default array => ['dog','cat','donkey']
             $value = [];
 
             $arrValue = StringUtil::deserialize($objModel->pets, true);
@@ -88,7 +109,7 @@ class AssignPetToMemberModuleController extends AbstractFrontendModuleController
 
             $blnMandatory = false;
             $objForm->addFormField('pets', [
-                'label'     => 'Haustiere',
+                'label'     => $this->translator->trans('MSC.pets', [], 'contao_default'),
                 'inputType' => 'multitext',
                 'eval'      => ['mandatory' => $blnMandatory, 'multiple' => true],
                 'value'     => $value,
@@ -125,6 +146,7 @@ class AssignPetToMemberModuleController extends AbstractFrontendModuleController
                 }
             }
 
+            $template->user = $objModel;
             $template->request = Url::removeQueryString(['id']);
             $template->form = $objForm->generate();
         }
@@ -133,7 +155,6 @@ class AssignPetToMemberModuleController extends AbstractFrontendModuleController
         return $template->getResponse();
     }
 }
-
 
 ```
 
