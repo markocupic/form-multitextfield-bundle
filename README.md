@@ -1,3 +1,6 @@
+### Abandoned: 
+### Please switch to [markocupic/contao-form-multirow-text-field-bundle](https://github.com/markocupic/contao-form-multirow-text-field-bundle)
+
 # form-multitextfield-bundle
 
 ![form-multitextfield-bundle](src/Resources/public/img/screenshot.png?raw=true "Formfield")
